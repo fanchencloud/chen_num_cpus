@@ -1,4 +1,14 @@
+#![cfg_attr(test, deny(warnings))]
+// #![deny(missing_docs)]
+#![allow(non_snake_case)]
 
+#[cfg(not(windows))]
+extern crate libc;
+
+#[cfg(target_os = "linux")]
+mod linux;
+#[cfg(target_os = "linux")]
+use linux::{get_num_cpus, get_num_physical_cpus};
 
 /// 返回当前系统的可用 CPU 数。此函数将获取逻辑内核数。
 /// 有时这与物理内核的数量不同（请参阅维基百科上的同步多线程）。这将始终返回至少 1。
